@@ -7,5 +7,6 @@ class Image {
 		std::size_t size = 0;
 	public:
 		Image(const char* filename);
+		void resize(float scale_factor);
 		~Image();
 };
