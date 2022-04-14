@@ -3,6 +3,7 @@
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
 #include "../libs/stb_image_resize.h"
 #include <cstdio>
+#include <cmath>
 #include "Img.h"
 
 Image::Image(const char* filename){
@@ -19,11 +20,16 @@ Image::~Image(){
 }
 
 void Image::resize(float scale){
-	uint8_t* new_data;
-	stbir_resize_uint8(data, width, height, 0,\
-				 new_data, scale*width, scale*height, 0, channels);
+	int new_width = floor(scale*width);
+	int new_height = floor(scale*height);
+	unsigned char* new_data = (unsigned char*) malloc(new_width*new_height*channels*sizeof(unsigned char));
+	printf("Working\n");
+	stbir_resize_uint8(data, width, height, 0,
+				 new_data, new_width, new_height, 0, channels);
 	if (new_data != NULL){
-		data = new_data;
+		printf("Resized to %d X %d X %d\n", new_width, new_height, channels);
+	} else {
+		printf("Error.\n");
 	}
-	
+	free(new_data);
 }
