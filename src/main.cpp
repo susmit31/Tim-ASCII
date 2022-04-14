@@ -1,4 +1,3 @@
-#include <cstdio>
 #include "Img.h"
 
 int main(int argc, char* argv[]){
