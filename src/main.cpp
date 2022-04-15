@@ -9,6 +9,6 @@ int main(int argc, char* argv[]){
 	Image output(floor(img.get_width()*scale), floor(img.get_height()*scale), floor(img.get_channels()));
 	img.resize(scale, output);
 	printf("%d X %d X %d\n", output.get_width(), output.get_height(), output.get_channels());
-	output.save("resizedu.png");
+	output.save("./resizedu.png");
 	return 0;
 }

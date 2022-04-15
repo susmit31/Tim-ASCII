@@ -87,14 +87,17 @@ bool Image::save(const char* filename){
 	bool success;
 	const char* extension = strrchr(filename, '.');
 
-	if (strcmp(extension, "png")==0){
-		int result = stbi_write_png(filename, width, height, channels, data, 0);
-		success = result != 0;
-	} else if (strcmp(extension, "jpg")==0){
-		int result = stbi_write_jpg(filename, width, height, channels, data, 0);
-		success = result != 0;
-	} else
-		success = false;
+	if (extension != NULL){
+		if (strcmp(extension, ".png")==0){
+			int result = stbi_write_png(filename, width, height, channels, data, 0);
+			success = result != 0;
+		} else if (strcmp(extension, ".jpg")==0){
+			int result = stbi_write_jpg(filename, width, height, channels, data, 0);
+			success = result != 0;
+		} else {
+			success = false;
+		}
+	}
 
 	return success;	
 }
