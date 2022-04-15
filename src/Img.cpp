@@ -101,3 +101,19 @@ bool Image::save(const char* filename){
 
 	return success;	
 }
+
+int Image::get_size(){
+	return (int) size;
+}
+
+void Image::to_array(int* arr[]){	
+	if (channels != 4) {
+		for (int i=0; i<height*width; i++)
+			arr[3][i] = 255;
+	}
+
+	for (int i=0; i<(int) size; i++){
+		arr[i%3][i/3] = (int) data[i];
+	}
+
+}

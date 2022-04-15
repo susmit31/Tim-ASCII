@@ -5,10 +5,26 @@
 int main(int argc, char* argv[]){
 	const char* img_name = argv[1];
 	Image img(img_name);
-	float scale = .2;
-	Image output(floor(img.get_width()*scale), floor(img.get_height()*scale), floor(img.get_channels()));
+	int w = img.get_width(), h = img.get_height(), c = img.get_channels();
+	float scale =  .1;
+	Image output(floor(w*scale), floor(h*scale), c);
 	img.resize(scale, output);
 	printf("%d X %d X %d\n", output.get_width(), output.get_height(), output.get_channels());
 	output.save("./resizedu.png");
+	
+	scale = .01;
+	int re_w = floor(w*scale), re_h = floor(h*scale);
+	Image output2(re_w, re_h, c);
+	img.resize(scale, output2);
+	
+	int* red = (int*) malloc(sizeof(int)*re_w*re_h);
+	int* green = (int*) malloc(sizeof(int)*re_w*re_h);
+	int* blue = (int*) malloc(sizeof(int)*re_w*re_h);
+	int* opacity = (int*) malloc(sizeof(int)*re_w*re_h);
+
+	int* arr[4] = { red, green, blue, opacity } ;
+	printf("Hehehe\n");
+	output2.to_array(arr);
+	printf("%d, %d, %d, %d\n", red[0], green[0], blue[0], opacity[0]);
 	return 0;
 }

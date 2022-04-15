@@ -13,6 +13,7 @@ class Image {
 		int get_width();
 		int get_height();
 		int get_channels();
+		void to_array(int* arr[]);
 		bool resize(float scale, Image& output);
 		uint8_t* get_data();
 		bool save(const char* filename);
