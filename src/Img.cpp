@@ -106,14 +106,24 @@ int Image::get_size(){
 	return (int) size;
 }
 
-void Image::to_array(int* arr[]){	
+void Image::to_array_rgba(int* rgba_arr[]){	
 	if (channels != 4) {
 		for (int i=0; i<height*width; i++)
-			arr[3][i] = 255;
+			rgba_arr[3][i] = 255;
 	}
 
 	for (int i=0; i<(int) size; i++){
-		arr[i%3][i/3] = (int) data[i];
+		rgba_arr[i%3][i/3] = (int) data[i];
 	}
 
+}
+
+void Image::to_array_gray(int* rgba_arr[], float* gray){
+	this->to_array_rgba(rgba_arr);
+	int* red = rgba_arr[0];
+	int* green = rgba_arr[1];
+	int* blue = rgba_arr[2];
+	for (int i=0; i<width*height; i++){
+		gray[i] = red[i]*.299 + green[i]*.587 + blue[i]*.114;
+	}
 }

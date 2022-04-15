@@ -24,7 +24,11 @@ int main(int argc, char* argv[]){
 
 	int* arr[4] = { red, green, blue, opacity } ;
 	printf("Hehehe\n");
-	output2.to_array(arr);
+	output2.to_array_rgba(arr);
 	printf("%d, %d, %d, %d\n", red[0], green[0], blue[0], opacity[0]);
+
+	float* gray = (float*) malloc(sizeof(float)*re_w*re_h);
+	output2.to_array_gray(arr, gray);
+	printf("%f, %f, %f, %f\n", gray[0], gray[1], gray[2], gray[3]);
 	return 0;
 }
