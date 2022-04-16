@@ -113,17 +113,49 @@ void Image::to_array_rgba(int* rgba_arr[]){
 	}
 
 	for (int i=0; i<(int) size; i++){
-		rgba_arr[i%3][i/3] = (int) data[i];
+		rgba_arr[i%channels][i/channels] = (int) data[i];
 	}
 
 }
 
-void Image::to_array_gray(int* rgba_arr[], float* gray){
-	this->to_array_rgba(rgba_arr);
-	int* red = rgba_arr[0];
-	int* green = rgba_arr[1];
-	int* blue = rgba_arr[2];
+void Image::to_array_gray(float* gray){
+	int* red = (int*) malloc(width*height*sizeof(int));
+	int* green = (int*) malloc(width*height*sizeof(int));
+	int* blue = (int*) malloc(width*height*sizeof(int));
+	int* opacity = (int*) malloc(width*height*sizeof(int));
+	int* rgba_arr[4] = {red, green, blue, opacity};
+	
+	to_array_rgba(rgba_arr);
+	
 	for (int i=0; i<width*height; i++){
-		gray[i] = red[i]*.299 + green[i]*.587 + blue[i]*.114;
+		gray[i] = (red[i]*.299 + green[i]*.587 + blue[i]*.114)/255;
+	}
+}
+
+void Image::to_array_ascii(char* ascii){
+	float* gray = (float*) malloc(width*height*sizeof(float));
+	to_array_gray(gray);
+
+	for (int i=0; i < width*height; i++){
+		if (gray[i] > .8){
+			ascii[2*i] = '#';
+			ascii[2*i+1] = '#';
+		} 
+		else if (gray[i] > .6){
+			ascii[2*i] = '&';
+			ascii[2*i+1] = '&';
+		}
+		else if (gray[i] > .4){
+			ascii[2*i] = '%';
+			ascii[2*i+1] = '%';
+		}
+		else if (gray[i] > .2){
+			ascii[2*i] = '*';
+			ascii[2*i+1] = '*';
+		}
+		else{
+			ascii[2*i] = '-';
+			ascii[2*i+1] = '-';
+		}
 	}
 }

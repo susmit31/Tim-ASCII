@@ -14,8 +14,8 @@ class Image {
 		int get_height();
 		int get_channels();
 		void to_array_rgba(int* rgba_arr[]);
-		void to_array_gray(int* rgba_arr[], float* gray);
-		void to_array_ascii(float* gray, char* ascii);
+		void to_array_gray(float* gray);
+		void to_array_ascii(char* ascii);
 		bool resize(float scale, Image& output);
 		uint8_t* get_data();
 		bool save(const char* filename);
