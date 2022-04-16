@@ -13,8 +13,10 @@ int main(int argc, char* argv[]){
 	img.resize(scale, output);
 	printf("%d X %d X %d\n", output.get_width(), output.get_height(), output.get_channels());
 	output.save("./resizedu.png");
-	
-	scale = (float) 80/img.get_width();
+
+	int target_width;
+	sscanf(argv[2], "%d", &target_width);
+	scale = (float) target_width/img.get_width();
 	int re_w = floor(w*scale), re_h = floor(h*scale);
 	Image output2(re_w, re_h, c);
 	img.resize(scale, output2);
