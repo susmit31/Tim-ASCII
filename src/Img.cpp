@@ -132,30 +132,64 @@ void Image::to_array_gray(float* gray){
 	}
 }
 
+void Image::normalize_gray(float* gray){
+	float maxpixel = arrmax(gray, width*height);
+	printf("%f\n", maxpixel);
+	for (int i = 0; i < width*height; i++){
+		gray[i] /= maxpixel;
+	}
+}
+
 void Image::to_array_ascii(char* ascii){
 	float* gray = (float*) malloc(width*height*sizeof(float));
 	to_array_gray(gray);
+	normalize_gray(gray);
 
 	for (int i=0; i < width*height; i++){
-		if (gray[i] > .8){
+		if (gray[i] > .9){
 			ascii[2*i] = '#';
 			ascii[2*i+1] = '#';
-		} 
-		else if (gray[i] > .6){
+		}
+		else if (gray[i] > .8){
+			ascii[2*i] = '&';
+			ascii[2*i+1] = '#';
+		}
+		else if (gray[i] > .7){
 			ascii[2*i] = '&';
 			ascii[2*i+1] = '&';
 		}
-		else if (gray[i] > .4){
-			ascii[2*i] = '%';
-			ascii[2*i+1] = '%';
+		else if (gray[i] > .6){
+			ascii[2*i] = '$';
+			ascii[2*i+1] = '-';
 		}
-		else if (gray[i] > .2){
+		else if (gray[i] > .5){
+			ascii[2*i] = '%';
+			ascii[2*i+1] = '-';
+		}
+		else if (gray[i] > .4){
 			ascii[2*i] = '*';
 			ascii[2*i+1] = '*';
 		}
-		else{
+		else if (gray[i] > .3){
+			ascii[2*i] = '*';
+			ascii[2*i+1] = ' ';
+		}
+		else if (gray[i] > .2){
 			ascii[2*i] = '-';
-			ascii[2*i+1] = '-';
+			ascii[2*i+1] = ' ';
+		}
+		else{
+			ascii[2*i] = ' ';
+			ascii[2*i+1] = ' ';
 		}
 	}
+}
+
+float arrmax(float* arr, int len_arr){
+	float maxel = arr[0];
+	for (int i = 0;  i< len_arr; i++){
+		if (arr[i] > maxel)
+			maxel = arr[i];
+	}
+	return maxel;
 }

@@ -15,6 +15,7 @@ class Image {
 		int get_channels();
 		void to_array_rgba(int* rgba_arr[]);
 		void to_array_gray(float* gray);
+		void normalize_gray(float* gray);
 		void to_array_ascii(char* ascii);
 		bool resize(float scale, Image& output);
 		uint8_t* get_data();
@@ -22,3 +23,4 @@ class Image {
 		~Image();
 };
 
+float arrmax(float* arr, int size);
