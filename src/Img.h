@@ -1,3 +1,6 @@
+#ifndef SUSIMG_H
+#define SUSIMG_H
+
 #include <cstdint>
 
 class Image {
@@ -24,3 +27,5 @@ class Image {
 };
 
 float arrmax(float* arr, int size);
+
+#endif
